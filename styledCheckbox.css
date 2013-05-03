@@ -1,0 +1,21 @@
+.styledCheckbox-hide {
+	opacity:0;
+	filter:alpha(opacity=0);
+}
+
+.styledCheckbox-control {
+	zoom:1;
+	*display:inline;
+	_height:30px;
+	border:2px solid #000;
+}
+
+.styledCheckbox-checked {
+	background:blue;
+	display:inline-block;
+}
+
+.styledCheckbox-unchecked {
+	background:#fff;
+	display:inline-block;
+}
