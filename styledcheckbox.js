@@ -82,7 +82,7 @@
     Plugin.prototype = {
         log : function(msg,type){
             if(this.options.debug){
-                console.log('@styledCheckboxPlugin ' + type + ' : ' + msg);
+                console.log('@styledCheckboxPlugin ' + (type || 'info') + ' : ' + msg);
             }
         },
         execChecked : function(){
