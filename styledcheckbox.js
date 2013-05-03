@@ -7,7 +7,9 @@
     var pluginName = "styledCheckbox",
     
     defaults = {
-
+        checkedCls : 'styledCheckbox-checked',
+        uncheckedCls : 'styledCheckbox-unchecked',
+        onChange : function(){}
     };
 
     function Plugin( element, options ) {
