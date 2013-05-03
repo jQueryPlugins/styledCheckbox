@@ -106,6 +106,16 @@
         },
         isUnchecked : function(){
             return !this.element.is(':checked');
+        },
+        getValue : function(){
+            return this.element.val();
+        },
+        setValue : function(value){
+            this.element.val(value);
+            return this;
+        },
+        getInput : function(){
+            return this.element;
         }
     };
 
