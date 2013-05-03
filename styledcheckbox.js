@@ -1,73 +1,128 @@
 /**
- * Styled checkbox plugin
- * @author Netanel Edri <netanelweb@gmail.com>
+ * Styled checkbox jQuery plugin
+ * @author Netanel Edri <www.netaneledri.net>
+ * @version : 1.0
 **/
 
 ;(function ( $, window, document, undefined ) {
+    
     var pluginName = "styledCheckbox",
     
     defaults = {
         checkedCls : 'styledCheckbox-checked',
         uncheckedCls : 'styledCheckbox-unchecked',
         hideCls : 'styledCheckbox-hide',
-        wrapperCls : 'styledCheckbox-control',
-        onChange : function(){}
+        wrapperCls : 'styledCheckbox-wrapper',
+        debug : false,
+        beforeChange : function(){ return true; },
+        afterChange : function(){}
     };
 
     function Plugin( element, options ) {
-        this.element = element;
+        this.element = $(element);
         this.options = $.extend( {}, defaults, options );
         this._defaults = defaults;
         this._name = pluginName;
-        this.init();
+        init(this);
     }
 
-    Plugin.prototype = {
-        init: function(){
-            var that = this , el = that.element , options = that.options;
+    function init(that)
+    {
+        var el = that.element , options = that.options;
 
-            that.log('start init','info');
+        that.log('start init','info');
 
-            var wrapperTag = '<div class="' + options.wrapperCls + '"></div>';
-            
-            if(el.attr('type') === 'checkbox' && el.is(':checkbox')){
+        var wrapperTag = $("<div></div>",{
+            class : options.wrapperCls
+        });
+        
+        if(el.attr('type') === 'checkbox' && el.is(':checkbox')){
 
-                el.addClass(options.hideCls).wrap(wrapperTag).change(function(){
+            el.addClass(options.hideCls).wrap(wrapperTag);
 
-                    that.log('input change checked mode','info');
+            var wrapper = el.parent();
 
-                    var wrapper = el.parent();
+            wrapper.click(function(){
+                el.click();
+            });
 
+            el.bind("change",function(){
+
+                that.log('input change checked mode','info');
+                that.log('beforeChange method exec');
+
+                if(options.beforeChange(el.data(pluginName)))
+                {
                     if(el.is(':checked')){
+                        that.log('change wrapper class to checked','info');
                         wrapper.removeClass(options.uncheckedCls).addClass(options.checkedCls);
                     } else {
+                        that.log('change wrapper class to unchcked','info');
                         wrapper.removeClass(options.checkedCls).addClass(options.uncheckedCls);
                     }
 
-                });
-
-                if(el.is(':checked')){
-                    that.log('input is already checked so add the checked class','info');
-                    el.parent().addClass(options.checkedCls);
+                    that.log('afterChange method exec');
+                    options.afterChange(el.data(pluginName));
                 }
 
-            } else {
-                that.log('The element is not a checkbox','error');
+            });
+
+            if(el.is(':checked')){
+                that.log('input is already checked so add the checked class','info');
+                el.parent().addClass(options.checkedCls);
             }
 
-            that.log('finish init','info');
-        },
+        } else {
+            that.log('The element is not a checkbox','error');
+        }
+
+        that.log('finish init','info');
+    }
+
+    Plugin.prototype = {
         log : function(msg,type){
-            console.log('@styledCheckboxPlugin ' + type + ' : ' + msg);
+            if(this.options.debug){
+                console.log('@styledCheckboxPlugin ' + type + ' : ' + msg);
+            }
+        },
+        execChecked : function(){
+            if(!this.element.is(':checked')){
+                this.element.parent().click();
+            }
+        },
+        execUnchecked : function(){
+            if(this.element.is(':checked')){
+                this.element.parent().click();
+            }
+        },
+        destroy : function(){
+            this.element.removeClass(this.options.hideCls).unbind("change").unwrap();
+        },
+        activate : function(){
+            init(this);
+        },
+        isChecked : function(){
+            return this.element.is(':checked');
+        },
+        isUnchecked : function(){
+            return !this.element.is(':checked');
         }
     };
 
-    $.fn[pluginName] = function ( options ) {
-        return this.each(function () {
-            if (!$.data(this, "plugin_" + pluginName)) {
-                $.data(this, "plugin_" + pluginName, new Plugin( this, options ));
+    $.fn[pluginName] = function ( param ) {
+        if($.isPlainObject(param))
+        {
+            return this.each(function () {
+                if (!$.data(this, pluginName)) {
+                    $.data(this, pluginName, new Plugin( this, param ));
+                    return $.data(this,pluginName);
+                }
+            });
+        } else {
+            if ($.data(this, pluginName)) {
+                return this.data(pluginName);
             }
-        });
+        }
     };
 
 })( jQuery, window, document );

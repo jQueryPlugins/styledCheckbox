@@ -4,8 +4,8 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<title>styledCheckbox plugin example</title>
-		<link rel="stylesheet" type="text/css" href="styledCheckbox.css" />
-		<link rel="stylesheet" type="text/css" href="example.css" />
+		<link rel="stylesheet" href="styledCheckbox.css">
+		<link rel="stylesheet" href="example.css">
 	</head>
 	<body>
 		<h1>styledCheckbox plugin example</h1>
@@ -13,5 +13,16 @@
 			<input type="checkbox" name="mode" value="1" checked />
 			<input type="checkbox" name="mode" value="2" />
 		</form>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="styledCheckbox.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('input[type=checkbox]').styledCheckbox({
+					debug : true
+				});
+
+				window.first = $("input:first").styledCheckbox() , window.last = $("input:last").styledCheckbox();
+			})
+		</script>
 	</body>
 </html>

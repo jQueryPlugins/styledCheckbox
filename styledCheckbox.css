@@ -1,21 +1,25 @@
+/**
+ * Styled checkbox jQuery plugin
+ * @author Netanel Edri <www.netaneledri.net>
+ * @version : 1.0
+**/
+
 .styledCheckbox-hide {
-	opacity:0;
-	filter:alpha(opacity=0);
+	display:none;
 }
 
-.styledCheckbox-control {
+.styledCheckbox-wrapper {
 	zoom:1;
 	*display:inline;
-	_height:30px;
-	border:2px solid #000;
+	height:20px;
+	_height:20px;
+	width:20px;
 }
 
 .styledCheckbox-checked {
-	background:blue;
-	display:inline-block;
+	/* custom css to checked mode */
 }
 
 .styledCheckbox-unchecked {
-	background:#fff;
-	display:inline-block;
+	/* custom css to unchecked mode */
 }
