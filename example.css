@@ -1,0 +1,26 @@
+* {
+	margin:0px;
+	padding:0px;
+	outline:0;
+	border:0;
+	font-size:100%;
+}
+
+html , body {
+	direction:ltr;
+	text-align:left;
+}
+
+body {
+	font-family:arial;
+	font-size:13px;
+	padding:20px;
+}
+
+h1 {
+	font-size:30px;
+	border-bottom:1px solid #bfbfbf;
+	padding-bottom:5px;
+	font-weight:bold;
+	margin-bottom:10px;
+}
